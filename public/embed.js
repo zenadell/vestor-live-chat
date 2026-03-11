@@ -1,13 +1,11 @@
 (function () {
-    // 1. Inject CSS
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'http://localhost:3000/widget/embed.css'; // Update in prod
-    document.head.appendChild(link);
+    const SOCKET_SERVER = window.VGP_CHAT_URL || 'http://localhost:3000';
 
-    // 2. Load Socket.io script dynamically
+    // 1. CSS is now already loaded by Laravel master.blade.php, so we skip injecting it here to avoid duplication or bad paths.
+
+    // 2. Load Socket.io script dynamically from the backend server
     const script = document.createElement('script');
-    script.src = 'http://localhost:3000/socket.io/socket.io.js'; // Update in prod
+    script.src = `${SOCKET_SERVER}/socket.io/socket.io.js`;
     script.onload = initChat;
     document.body.appendChild(script);
 
@@ -192,7 +190,7 @@
             formData.append('file', file);
 
             try {
-                const res = await fetch('http://localhost:3000/api/upload', { method: 'POST', body: formData });
+                const res = await fetch(`${SOCKET_SERVER}/api/upload`, { method: 'POST', body: formData });
                 const data = await res.json();
 
                 if (data.url) {
