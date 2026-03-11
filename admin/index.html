@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Chat Admin | Vestor Global Pro</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-gray-100 h-screen overflow-hidden flex flex-col">
+
+    <!-- Top Navigation -->
+    <nav class="bg-indigo-900 text-white shadow-lg p-4 flex justify-between items-center z-10">
+        <div class="flex items-center space-x-3">
+            <i class="fa-solid fa-headset text-2xl text-green-400"></i>
+            <h1 class="text-xl font-bold">Live Support Admin</h1>
+        </div>
+        <div class="flex items-center space-x-4">
+            <span id="connection-status" class="flex items-center text-sm">
+                <span class="w-2.5 h-2.5 bg-yellow-400 rounded-full mr-2"></span> Connecting...
+            </span>
+        </div>
+    </nav>
+
+    <!-- Main Content Grid -->
+    <div class="flex-1 flex overflow-hidden">
+
+        <!-- Sidebar - Visitor List -->
+        <div class="w-1/3 md:w-1/4 bg-white border-r flex flex-col">
+            <div class="p-4 border-b bg-gray-50 flex justify-between items-center">
+                <h2 class="font-semibold text-gray-700">Visitors</h2>
+                <i class="fa-solid fa-users text-gray-400"></i>
+            </div>
+
+            <div id="visitor-list" class="flex-1 overflow-y-auto w-full">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- Main Chat Area -->
+        <div class="flex-1 flex flex-col bg-gray-50 relative">
+
+            <!-- Default Empty State -->
+            <div id="empty-state"
+                class="absolute inset-0 flex flex-col items-center justify-center text-gray-400 z-10 bg-gray-50">
+                <i class="fa-regular fa-comments text-6xl mb-4 text-gray-300"></i>
+                <p>Select a visitor to start chatting</p>
+            </div>
+
+            <!-- Chat Header -->
+            <div id="chat-header" class="p-4 border-b bg-white hidden justify-between items-center shadow-sm z-0">
+                <div class="flex items-center space-x-3">
+                    <div
+                        class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div>
+                        <h3 id="current-visitor-id" class="font-bold text-gray-800">Visitor</h3>
+                        <p id="current-visitor-location" class="text-xs text-gray-500 flex items-center gap-2">
+                            <span>Location Unknown</span>
+                            <span id="admin-read-receipt" class="hidden text-[10px] text-green-500"><i
+                                    class="fa-solid fa-check-double"></i> Seen</span>
+                        </p>
+                    </div>
+                </div>
+                <!-- Export Chat Button -->
+                <div>
+                    <button id="export-chat-btn"
+                        class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm px-3 py-1.5 rounded-md flex items-center gap-2 transition-colors">
+                        <i class="fa-solid fa-download"></i> Export
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chat Messages Container -->
+            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto flex flex-col space-y-3 z-0">
+                <!-- Messages populated via JS -->
+            </div>
+
+            <!-- Typing Indicator Area -->
+            <div id="typing-indicator"
+                class="absolute bottom-[76px] left-4 text-xs text-gray-400 hidden z-10 bg-gray-50 px-2 py-1 rounded-full shadow-sm border border-gray-100 italic">
+                Visitor is typing...
+            </div>
+
+            <!-- Chat Input Area -->
+            <div id="chat-input-area" class="p-4 bg-white border-t hidden z-0 relative">
+                <form id="chat-form" class="flex items-center space-x-2">
+                    <input type="file" id="file-input" class="hidden" accept="image/*, application/pdf">
+                    <button type="button" id="attach-btn"
+                        class="text-gray-400 hover:text-indigo-600 transition-colors p-2 text-xl">
+                        <i class="fa-solid fa-paperclip"></i>
+                    </button>
+                    <input type="text" id="message-input" autocomplete="off"
+                        class="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        placeholder="Type a message...">
+                    <button type="submit"
+                        class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Notification Sound (Assuming exist) -->
+    <!-- You can add a small mp3 to public folder for pop sound -->
+    <audio id="notification-sound" src="/widget/pop.mp3" preload="auto"></audio>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

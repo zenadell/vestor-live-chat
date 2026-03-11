@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Test Site</title>
+    <!-- Tailwind CSS for dummy site styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+    <nav class="bg-indigo-600 text-white p-4 shadow-md">
+        <div class="container mx-auto font-bold text-xl">Vestor Global Pro Demo Site</div>
+    </nav>
+
+    <div class="container mx-auto p-8 mt-10">
+        <h1 class="text-4xl font-bold mb-4">Welcome to Vestor Global Pro</h1>
+        <p class="text-lg text-gray-600 max-w-2xl mb-8">This is a dummy test page. Wait 3 seconds, and the automated
+            "Hello there! Can we help you?" live chat greeting will pop up on the bottom right.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <h3 class="text-xl font-semibold mb-2">Test Instructions:</h3>
+                <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                    <li>Start the Node server: <code>node server.js</code></li>
+                    <li>Open this page (`http://localhost:3000/widget/index.html`)</li>
+                    <li>Open Admin Panel (`http://localhost:3000/admin/index.html`) in another window</li>
+                    <li>Chat back and forth between the two windows!</li>
+                    <li>Refresh this page to verify your chat history is permanently recovered via SQLite and
+                        localStorage.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inject the custom standalone Live Chat Widget -->
+    <script src="http://localhost:3000/widget/embed.js"></script>
+</body>
+
+</html>

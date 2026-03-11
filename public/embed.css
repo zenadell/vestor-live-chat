@@ -1,0 +1,327 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+#vgp-chat-widget {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 999999;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Chat Button Bubble */
+#vgp-chat-btn {
+    width: 60px;
+    height: 60px;
+    background-color: #4f46e5;
+    /* Indigo 600 */
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+#vgp-chat-btn:hover {
+    transform: scale(1.05);
+    background-color: #4338ca;
+}
+
+/* Notification Badge */
+#vgp-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #ef4444;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: none;
+    border: 2px solid #fff;
+}
+
+/* Auto Greeting Popup (Next to button) */
+#vgp-greeting-popup {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    background: white;
+    padding: 12px 18px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    color: #1f2937;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    border: 1px solid #e5e7eb;
+}
+
+#vgp-greeting-popup.vgp-show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+#vgp-greeting-popup::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    right: 22px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid white;
+}
+
+/* Main Chat Window */
+#vgp-chat-window {
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    width: 350px;
+    height: 500px;
+    max-height: calc(100vh - 100px);
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform-origin: bottom right;
+    transform: scale(0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#vgp-chat-window.vgp-open {
+    position: fixed;
+    bottom: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    max-width: 100vw !important;
+    border-radius: 0 !important;
+    transform: scale(1);
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Window Header */
+.vgp-header {
+    background: #4f46e5;
+    color: white;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 16px 16px 0 0;
+}
+
+.vgp-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.vgp-header p {
+    margin: 2px 0 0;
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+.vgp-close-btn {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 20px;
+    padding: 0;
+    opacity: 0.8;
+}
+
+.vgp-close-btn:hover {
+    opacity: 1;
+}
+
+/* Message Area */
+.vgp-messages {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    background: #f9fafb;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Scrollbar */
+.vgp-messages::-webkit-scrollbar {
+    width: 4px;
+}
+
+.vgp-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.vgp-messages::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 4px;
+}
+
+/* Individual Message Bubbles */
+.vgp-msg {
+    max-width: 85%;
+    padding: 10px 14px;
+    font-size: 14px;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.vgp-msg-admin {
+    align-self: flex-start;
+    background: #e0e7ff;
+    color: #1e1b4b;
+    border-radius: 16px 16px 16px 4px;
+}
+
+.vgp-msg-visitor {
+    align-self: flex-end;
+    background: #4f46e5;
+    color: white;
+    border-radius: 16px 16px 4px 16px;
+}
+
+/* Input Area */
+.vgp-input-area {
+    padding: 12px;
+    background: white;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    gap: 8px;
+}
+
+.vgp-input-area input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    outline: none;
+    font-size: 14px;
+    transition: border 0.2s;
+}
+
+.vgp-input-area input:focus {
+    border-color: #4f46e5;
+}
+
+.vgp-input-area button {
+    background: #4f46e5;
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.vgp-input-area button:hover {
+    background: #4338ca;
+}
+
+/* Pre-Chat Form */
+.vgp-prechat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 24px;
+    background: #f9fafb;
+    gap: 12px;
+}
+
+.vgp-prechat p {
+    font-size: 14px;
+    color: #4b5563;
+    margin: 0 0 8px 0;
+    text-align: center;
+}
+
+.vgp-prechat input {
+    padding: 12px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+    transition: border 0.2s;
+}
+
+.vgp-prechat input:focus {
+    border-color: #4f46e5;
+}
+
+.vgp-prechat button {
+    background: #4f46e5;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 8px;
+    transition: background 0.2s;
+}
+
+.vgp-prechat button:hover {
+    background: #4338ca;
+}
+
+/* Typing Indicator */
+#vgp-typing-indicator {
+    padding: 8px 16px;
+    font-size: 11px;
+    color: #9ca3af;
+    font-style: italic;
+    background: #f9fafb;
+    border-top: 1px solid #f3f4f6;
+}
+
+#vgp-typing-indicator.hidden {
+    display: none;
+}
+
+.vgp-messages.hidden {
+    display: none;
+}
+
+.vgp-input-area.hidden {
+    display: none;
+}
+
+@media (max-width: 480px) {
+    #vgp-chat-window {
+        width: calc(100vw - 40px);
+        right: -10px;
+        bottom: 70px;
+    }
+}
