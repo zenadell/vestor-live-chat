@@ -29,7 +29,10 @@
                         <h3>Live Support</h3>
                         <p id="vgp-header-subtitle">We typically reply in a few minutes</p>
                     </div>
-                    <button class="vgp-close-btn" id="vgp-close-chat">&times;</button>
+                    <div style="display:flex; gap: 8px;">
+                        <button class="vgp-header-btn" id="vgp-expand-chat"><i class="fa-solid fa-expand"></i></button>
+                        <button class="vgp-header-btn vgp-close-btn" id="vgp-close-chat">&times;</button>
+                    </div>
                 </div>
                 
                 <div id="vgp-prechat-form" class="vgp-prechat">
@@ -55,13 +58,14 @@
                 <i class="fa-solid fa-comment-dots"></i>
                 <div id="vgp-badge">0</div>
             </div>
-            <audio id="vgp-notification-sound" src="http://localhost:3000/widget/pop.mp3" preload="auto"></audio>
+            <audio id="vgp-notification-sound" preload="auto"></audio>
         `;
         document.body.appendChild(container);
 
         // --- 5. DOM Elements ---
         const chatBtn = document.getElementById('vgp-chat-btn');
         const chatWindow = document.getElementById('vgp-chat-window');
+        const expandBtn = document.getElementById('vgp-expand-chat');
         const closeBtn = document.getElementById('vgp-close-chat');
         const greetingPopup = document.getElementById('vgp-greeting-popup');
         const badge = document.getElementById('vgp-badge');
@@ -85,6 +89,7 @@
         // --- 6. Socket Connection ---
         // Load environment variables or default to localhost
         const SOCKET_URL = window.VGP_CHAT_URL || 'http://localhost:3000';
+        notificationSound.src = `${SOCKET_URL}/widget/pop.mp3`;
         const socket = io(SOCKET_URL);
 
         function joinSocket() {
@@ -205,13 +210,12 @@
             fileInput.value = ''; // reset
         });
 
-        // --- 7. Event Listeners ---
         chatBtn.addEventListener('click', () => {
             isOpen = !isOpen;
             if (isOpen) {
                 chatWindow.classList.add('vgp-open');
                 greetingPopup.classList.remove('vgp-show');
-                chatBtn.innerHTML = '<i class="fa-solid fa-times"></i>';
+                chatBtn.innerHTML = '<i class="fa-solid fa-times" style="font-size: 24px;"></i>';
                 badge.style.display = 'none';
                 unreadCount = 0;
                 hasInteracted = true;
@@ -222,14 +226,22 @@
                 }
             } else {
                 chatWindow.classList.remove('vgp-open');
-                chatBtn.innerHTML = '<i class="fa-solid fa-comment-dots"></i>';
+                chatBtn.innerHTML = '<i class="fa-solid fa-comment-dots" style="font-size: 24px;"></i>';
             }
+        });
+
+        expandBtn.addEventListener('click', () => {
+            chatWindow.classList.toggle('vgp-fullscreen');
+            const isFullscreen = chatWindow.classList.contains('vgp-fullscreen');
+            expandBtn.innerHTML = isFullscreen ? '<i class="fa-solid fa-compress"></i>' : '<i class="fa-solid fa-expand"></i>';
         });
 
         closeBtn.addEventListener('click', () => {
             isOpen = false;
             chatWindow.classList.remove('vgp-open');
-            chatBtn.innerHTML = '<i class="fa-solid fa-comment-dots"></i>';
+            chatWindow.classList.remove('vgp-fullscreen');
+            expandBtn.innerHTML = '<i class="fa-solid fa-expand"></i>';
+            chatBtn.innerHTML = '<i class="fa-solid fa-comment-dots" style="font-size: 24px;"></i>';
         });
 
         chatForm.addEventListener('submit', (e) => {
