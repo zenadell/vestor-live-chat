@@ -25,33 +25,57 @@
             
             <div id="vgp-chat-window">
                 <div class="vgp-header">
-                    <div>
-                        <h3>Live Support</h3>
-                        <p id="vgp-header-subtitle">We typically reply in a few minutes</p>
+                    <div class="vgp-header-info">
+                        <div class="vgp-avatar-circle">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <div class="vgp-header-text">
+                            <h3>Live Support</h3>
+                            <p>Online • Reply in minutes</p>
+                        </div>
                     </div>
-                    <div style="display:flex; gap: 8px;">
-                        <button class="vgp-header-btn" id="vgp-expand-chat"><i class="fa-solid fa-expand"></i></button>
-                        <button class="vgp-header-btn vgp-close-btn" id="vgp-close-chat">&times;</button>
+                    <div style="display:flex; gap: 12px;">
+                        <button class="vgp-header-btn" id="vgp-expand-chat" style="background:none; border:none; color:white; cursor:pointer;"><i class="fa-solid fa-expand"></i></button>
+                        <button class="vgp-header-btn vgp-close-btn" id="vgp-close-chat" style="background:none; border:none; color:white; font-size: 20px; cursor:pointer;">&times;</button>
                     </div>
-                </div>
-                
-                <div id="vgp-prechat-form" class="vgp-prechat">
-                    <p>Please introduce yourself before chatting:</p>
-                    <input type="text" id="vgp-name-input" placeholder="Your Name" required>
-                    <input type="email" id="vgp-email-input" placeholder="Your Email" required>
-                    <button id="vgp-start-btn">Start Chat</button>
                 </div>
 
-                <div class="vgp-messages hidden" id="vgp-messages-container"></div>
+                <div id="vgp-prechat-form" class="vgp-prechat">
+                    <div class="vgp-prechat-icon"><i class="fa-solid fa-comments-dollar"></i></div>
+                    <h4>Welcome!</h4>
+                    <p>Introduce yourself to start a conversation with our team.</p>
+                    
+                    <div class="vgp-input-group">
+                        <label>Full Name</label>
+                        <input type="text" id="vgp-name-input" placeholder="e.g. John Doe" required>
+                    </div>
+                    
+                    <div class="vgp-input-group">
+                        <label>Email Address</label>
+                        <input type="email" id="vgp-email-input" placeholder="john@example.com" required>
+                    </div>
+
+                    <button class="vgp-start-btn" id="vgp-start-btn">Start Chatting</button>
+                </div>
+
+                <div class="vgp-messages hidden" id="vgp-messages-container" style="display:none; flex:1; overflow-y:auto; padding:20px; background:#f8fafc;"></div>
                 
                 <div id="vgp-typing-indicator" class="hidden">Admin is typing...</div>
 
-                <form class="vgp-input-area hidden" id="vgp-chat-form">
+                <form class="vgp-input-area hidden" id="vgp-chat-form" style="display:none; padding:15px; border-top:1px solid #eee; display:flex; gap:8px;">
                     <input type="file" id="vgp-file-input" style="display:none;" accept="image/*, application/pdf">
-                    <button type="button" id="vgp-attach-btn" style="background:transparent;color:#6b7280;border:none;cursor:pointer;"><i class="fa-solid fa-paperclip"></i></button>
-                    <input type="text" id="vgp-chat-input" placeholder="Type a message..." autocomplete="off">
-                    <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+                    <button type="button" id="vgp-attach-btn" style="background:transparent;color:#6b7280;border:none;cursor:pointer;font-size:20px;"><i class="fa-solid fa-paperclip"></i></button>
+                    <input type="text" id="vgp-chat-input" placeholder="Type message..." style="flex:1; padding:10px; border-radius:20px; border:1px solid #ddd;" autocomplete="off">
+                    <button type="submit" style="background:none; border:none; color:#6366f1; font-size:20px;"><i class="fa-solid fa-paper-plane"></i></button>
                 </form>
+
+                <div id="vgp-attachment-preview" class="hidden">
+                    <div id="vgp-preview-filename"></div>
+                    <div class="vgp-preview-actions">
+                        <button type="button" id="vgp-preview-cancel">Cancel</button>
+                        <button type="button" id="vgp-preview-send">Send File</button>
+                    </div>
+                </div>
             </div>
 
             <div id="vgp-chat-btn">
